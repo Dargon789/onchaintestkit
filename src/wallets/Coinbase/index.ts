@@ -26,6 +26,7 @@ export enum CoinbaseSpecificActionType {
   ADD_NETWORK = "addNetwork",
   SEND_TOKENS = "sendTokens",
   HANDLE_PASSKEY_POPUP = "handlePasskeyPopup",
+  ADD_WALLET_WITH_PRIVATE_KEY = "addWalletWithPrivateKey",
 }
 
 type CoinbaseActionType = BaseActionType | CoinbaseSpecificActionType
@@ -557,7 +558,7 @@ export class CoinbaseWallet extends BaseWallet {
         break
 
       case BaseActionType.IMPORT_WALLET_FROM_PRIVATE_KEY:
-        await this.homePage.importPrivateKey(
+        await this.onboardingPage.importPrivateKey(
           additionalOptions.privateKey as string,
           this.config.password as string,
         )
@@ -570,13 +571,6 @@ export class CoinbaseWallet extends BaseWallet {
         }
         await this.homePage.addNetwork(
           additionalOptions.network as NetworkConfig,
-        )
-        break
-
-      case BaseActionType.SWITCH_NETWORK:
-        await this.homePage.switchNetwork(
-          additionalOptions.networkName as string,
-          additionalOptions.isTestnet as boolean,
         )
         break
 
@@ -626,19 +620,12 @@ export class CoinbaseWallet extends BaseWallet {
         }
         break
 
-      case CoinbaseSpecificActionType.SEND_TOKENS:
-        // TODO: Implement token sending
-        // if (!additionalOptions.recipientAddress || !additionalOptions.amount) {
-        //   throw new Error(
-        //     "Recipient address and amount are required for sending tokens",
-        //   )
-        // }
-        // await this.homePage.sendTokens(
-        //   additionalOptions.recipientAddress as string,
-        //   additionalOptions.amount as string,
-        //   additionalOptions.tokenSymbol as string | undefined,
-        // )
-        throw new Error("sendTokens not implemented for Coinbase Wallet")
+      case CoinbaseSpecificActionType.ADD_WALLET_WITH_PRIVATE_KEY:
+        await this.homePage.addWithPrivateKey(
+          additionalOptions.privateKey as string,
+          this.config.password as string,
+        )
+        break
 
       default:
         throw new Error(`Unsupported action: ${action}`)
