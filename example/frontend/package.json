@@ -19,7 +19,7 @@
     "@tanstack/react-query": "^5",
     "dotenv": "^16.4.7",
     "next": "^14.2.30",
-    "react": "^18",
+    "react": "^19.1.1",
     "react-dom": "^18",
     "viem": "^2.17.4",
     "wagmi": "^2.11.0"
